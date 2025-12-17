@@ -1,3 +1,14 @@
 {
-  "A": ["MEX", "USA", "ARG", "FRA"]
+  "A": ["MEX", "RSA", "KOR", "UEFA_DEN_MKD_CZE_IRL"],
+  "B": ["CAN", "QAT", "SUI", "UEFA_ITA_NIR_WAL_BIH"],
+  "C": ["BRA", "MAR", "HAI", "SCO"],
+  "D": ["USA", "PAR", "AUS", "UEFA_TUR_ROU_SVK_KOS"],
+  "E": ["GER", "CUW", "CIV", "ECU"],
+  "F": ["NED", "JPN", "TUN", "UEFA_UKR_SWE_POL_ALB"],
+  "G": ["BEL", "EGY", "IRN", "NZL"],
+  "H": ["ESP", "KSA", "URU", "CPV"],
+  "I": ["FRA", "SEN", "NOR", "CONMEBOL_BOL_SUR_IRQ"],
+  "J": ["ARG", "AUT", "ALG", "JOR"],
+  "K": ["POR", "COL", "UZB", "CONCACAF_NCL_JAM_COD"],
+  "L": ["ENG", "CRO", "GHA", "PAN"]
 }

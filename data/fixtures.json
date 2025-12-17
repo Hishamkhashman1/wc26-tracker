@@ -1,10 +1,82 @@
 [
   {
+    "id": 1,
     "home": "MEX",
-    "away": "USA",
-    "date": "2026-06-11T20:00:00Z",
-    "stadium": "Azteca Stadium",
-    "city": "Mexico City",
-    "group": "A"
+    "away": "RSA",
+    "group": "A",
+    "stage": "group",
+    "date": "2026-06-12T04:00:00",
+    "stadium": "Mexico City Stadium",
+    "city": "Mexico City"
+  },
+  {
+    "id": 2,
+    "home": "KOR",
+    "away_pool": "DEN/MKD/CZE/IRL",
+    "group": "A",
+    "stage": "group",
+    "date": "2026-06-12T11:00:00",
+    "stadium": "Guadalajara Stadium",
+    "city": "Guadalajara"
+  },
+  {
+    "id": 3,
+    "home": "CAN",
+    "away_pool": "ITA/NIR/WAL/BIH",
+    "group": "B",
+    "stage": "group",
+    "date": "2026-06-13T04:00:00",
+    "stadium": "Toronto Stadium",
+    "city": "Toronto"
+  },
+  {
+    "id": 4,
+    "home": "USA",
+    "away": "PAR",
+    "group": "D",
+    "stage": "group",
+    "date": "2026-06-13T10:00:00",
+    "stadium": "Los Angeles Stadium",
+    "city": "Los Angeles"
+  },
+  {
+    "id": 5,
+    "home": "QAT",
+    "away": "SUI",
+    "group": "B",
+    "stage": "group",
+    "date": "2026-06-14T04:00:00",
+    "stadium": "San Francisco Bay Area Stadium",
+    "city": "San Francisco Bay Area"
+  },
+  {
+    "id": 6,
+    "home": "BRA",
+    "away": "MAR",
+    "group": "C",
+    "stage": "group",
+    "date": "2026-06-14T07:00:00",
+    "stadium": "New York/New Jersey Stadium",
+    "city": "New York"
+  },
+  {
+    "id": 7,
+    "home": "HAI",
+    "away": "SCO",
+    "group": "C",
+    "stage": "group",
+    "date": "2026-06-14T10:00:00",
+    "stadium": "Boston Stadium",
+    "city": "Boston"
+  },
+  {
+    "id": 8,
+    "home": "AUS",
+    "away_pool": "TUR/ROU/SVK/KOS",
+    "group": "D",
+    "stage": "group",
+    "date": "2026-06-14T13:00:00",
+    "stadium": "BC Place Vancouver",
+    "city": "Vancouver"
   }
 ]
