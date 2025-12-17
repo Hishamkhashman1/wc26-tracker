@@ -1,3 +1,48 @@
+const flagIsoMap = {
+  ALG: 'dz',
+  ARG: 'ar',
+  AUS: 'au',
+  AUT: 'at',
+  BEL: 'be',
+  BRA: 'br',
+  CAN: 'ca',
+  COL: 'co',
+  CPV: 'cv',
+  CRO: 'hr',
+  CUW: 'cw',
+  CIV: 'ci',
+  ECU: 'ec',
+  EGY: 'eg',
+  ENG: 'gb-eng',
+  ESP: 'es',
+  FRA: 'fr',
+  GER: 'de',
+  GHA: 'gh',
+  HAI: 'ht',
+  IRN: 'ir',
+  JPN: 'jp',
+  JOR: 'jo',
+  KOR: 'kr',
+  KSA: 'sa',
+  MAR: 'ma',
+  MEX: 'mx',
+  NED: 'nl',
+  NOR: 'no',
+  NZL: 'nz',
+  PAN: 'pa',
+  PAR: 'py',
+  POR: 'pt',
+  QAT: 'qa',
+  RSA: 'za',
+  SCO: 'gb-sct',
+  SEN: 'sn',
+  SUI: 'ch',
+  TUN: 'tn',
+  URU: 'uy',
+  USA: 'us',
+  UZB: 'uz'
+};
+
 async function loadData() {
   const [teams, fixtures, groups] = await Promise.all([
     fetch('data/teams.json').then(r => r.json()),
@@ -56,9 +101,12 @@ async function loadData() {
     teamDetails.innerHTML = `
       <article class="team-card">
         <div class="team-card__header">
-          <div>
-            <span class="team-code">${team.code}</span>
-            <h3>${team.name}</h3>
+          <div class="team-card__title">
+            ${renderFlag(team.code)}
+            <div>
+              <span class="team-code">${team.code}</span>
+              <h3>${team.name}</h3>
+            </div>
           </div>
           <span class="pill">Group ${team.group}</span>
         </div>
@@ -119,13 +167,19 @@ async function loadData() {
             </header>
             <div class="fixture-matchup">
               <div class="team ${isHome ? 'is-selected' : ''}">
-                <span class="code">${home.code}</span>
-                <span class="name">${home.label}</span>
+                ${renderFlag(home.code)}
+                <div class="team-text">
+                  <span class="code">${home.code}</span>
+                  <span class="name">${home.label}</span>
+                </div>
               </div>
               <span class="versus">vs</span>
               <div class="team ${!isHome ? 'is-selected' : ''}">
-                <span class="code">${away.code}</span>
-                <span class="name">${away.label}</span>
+                ${renderFlag(away.code)}
+                <div class="team-text">
+                  <span class="code">${away.code}</span>
+                  <span class="name">${away.label}</span>
+                </div>
               </div>
             </div>
             <p class="fixture-venue">${fixture.city} · ${fixture.stadium}</p>
@@ -205,6 +259,26 @@ function prettifyPlaceholder(code) {
 
 function capitalize(str = '') {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function renderFlag(code) {
+  const iso = code ? flagIsoMap[code] : null;
+  if (!iso) {
+    return '<span class="flag flag--placeholder" aria-hidden="true">🏳️</span>';
+  }
+
+  const base = 'https://flagcdn.com';
+  return `
+    <img
+      class="flag"
+      src="${base}/w40/${iso}.png"
+      srcset="${base}/w80/${iso}.png 2x"
+      alt=""
+      loading="lazy"
+      decoding="async"
+      aria-hidden="true"
+    />
+  `;
 }
 
 loadData();

@@ -143,6 +143,12 @@ select:focus-visible {
   margin-top: 1rem;
 }
 
+.team-card__title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .team-card__header {
   display: flex;
   justify-content: space-between;
@@ -254,7 +260,9 @@ select:focus-visible {
   padding: 0.55rem 0.75rem;
   border: 1px solid transparent;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .fixture .team.is-selected {
@@ -278,6 +286,11 @@ select:focus-visible {
 .versus {
   font-weight: 700;
   color: #94a3b8;
+}
+
+.team-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .fixture-venue {
@@ -305,6 +318,27 @@ footer {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.flag {
+  width: 36px;
+  height: 24px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+  background: #fff;
+}
+
+.flag--placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 24px;
+  font-size: 0.95rem;
+  background: #f1f5f9;
+  color: #94a3b8;
 }
 
 @media (prefers-reduced-motion: reduce) {
