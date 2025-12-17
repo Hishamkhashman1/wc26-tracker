@@ -1,0 +1,317 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  color: #0f172a;
+  background-color: #edf2ff;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #dbeafe, #eef2ff 55%);
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem 3rem;
+}
+
+.app-shell {
+  width: min(900px, 100%);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 28px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 70px rgba(15, 23, 42, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.eyebrow {
+  font-size: 0.9rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin: 0;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.2;
+  color: #0f172a;
+}
+
+.lead {
+  margin: 0 auto;
+  max-width: 580px;
+  color: #475569;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.select-wrapper {
+  position: relative;
+  width: min(360px, 100%);
+  margin: 0 auto;
+}
+
+.select-wrapper::after {
+  content: '▾';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #0f172a;
+}
+
+select {
+  width: 100%;
+  appearance: none;
+  font-size: 1rem;
+  padding: 0.9rem 3rem 0.9rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #cbd5f5;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  background: white;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+select:focus-visible {
+  outline: 3px solid #38bdf8;
+  outline-offset: 3px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.panel {
+  background: #f8fafc;
+  border-radius: 20px;
+  padding: 1.75rem;
+  border: 1px solid #e2e8f0;
+  min-height: 260px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+.placeholder {
+  color: #94a3b8;
+  font-style: italic;
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.team-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.team-code {
+  display: inline-block;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #94a3b8;
+}
+
+.team-card__header h3 {
+  margin: 0.3rem 0 0;
+  font-size: 1.5rem;
+  color: #0f172a;
+}
+
+.pill {
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.team-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.team-meta div {
+  background: white;
+  border-radius: 14px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+}
+
+.team-meta dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin: 0 0 0.2rem;
+}
+
+.team-meta dd {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.group-foes {
+  margin: 0;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.group-foes span {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+#fixturesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.fixture {
+  background: white;
+  border-radius: 18px;
+  padding: 1rem 1.25rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+}
+
+.fixture header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+.fixture-stage {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.fixture-matchup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.fixture .team {
+  flex: 1;
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+.fixture .team.is-selected {
+  border-color: #38bdf8;
+  background: #ecfeff;
+  box-shadow: 0 0 0 1px #bae6fd;
+}
+
+.fixture .team .code {
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: #94a3b8;
+}
+
+.fixture .team .name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.versus {
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.fixture-venue {
+  margin: 0.75rem 0 0;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+footer {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 1rem;
+  }
+
+  .app-shell {
+    padding: 1.5rem;
+  }
+
+  .fixture header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,23 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WC26 Tracker</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="app-shell">
+    <header class="hero">
+      <p class="eyebrow">North America 2026</p>
+      <h1>World Cup 2026 Tracker</h1>
+      <p class="lead">Pick a nation to see their profile, ranking, and confirmed group-stage fixtures.</p>
+      <label for="teamSelect" class="sr-only">Select your team</label>
+      <div class="select-wrapper">
+        <select id="teamSelect">
+          <option value="">Select your team</option>
+        </select>
+      </div>
+    </header>
 
-<h1>World Cup 2026 Tracker</h1>
+    <main class="content-grid">
+      <section id="teamInfo" class="panel">
+        <h2>Team snapshot</h2>
+        <p class="placeholder">Choose a team to see quick facts.</p>
+        <div id="teamDetails" aria-live="polite"></div>
+      </section>
 
-<select id="teamSelect">
-  <option value="">Select your team</option>
-</select>
+      <section id="fixtures" class="panel">
+        <h2>Upcoming matches</h2>
+        <p class="placeholder">Fixtures will appear here once a team is selected.</p>
+        <div id="fixturesList" aria-live="polite"></div>
+      </section>
+    </main>
 
-<div id="output"></div>
+    <footer>
+      Unofficial, independent project. Not affiliated with FIFA.
+    </footer>
+  </div>
 
-<footer>
-  Unofficial, independent project. Not affiliated with FIFA.
-</footer>
-
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
