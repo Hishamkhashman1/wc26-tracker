@@ -156,7 +156,7 @@ async function loadData() {
           : fixture.stage
             ? capitalize(fixture.stage)
             : 'TBD';
-        const calendarLink = buildCalendarLink(fixture, home.label, away.label, stageLabel);
+        const calendarLink = buildGoogleCalendarLink(fixture, home.label, away.label, stageLabel);
         const mapsLink = buildMapsLink(fixture);
 
         return `
@@ -189,9 +189,10 @@ async function loadData() {
               <a
                 class="fixture-action"
                 href="${calendarLink}"
-                download="fixture-${fixture.id}.ics"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Add to calendar
+                Add to Google Calendar
               </a>
               <a
                 class="fixture-action"
@@ -300,29 +301,23 @@ function renderFlag(code) {
   `;
 }
 
-function buildCalendarLink(fixture, homeName, awayName, stageLabel) {
+function buildGoogleCalendarLink(fixture, homeName, awayName, stageLabel) {
   const start = new Date(fixture.date);
   const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
-  const dtStart = formatForICS(start);
-  const dtEnd = formatForICS(end);
-  const description = `Stage: ${stageLabel}\\nVenue: ${fixture.stadium}, ${fixture.city}`;
-  const ics = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//WC26 Tracker//EN',
-    'BEGIN:VEVENT',
-    `UID:fixture-${fixture.id}@wc26-tracker`,
-    `DTSTAMP:${formatForICS(new Date())}`,
-    `DTSTART:${dtStart}`,
-    `DTEND:${dtEnd}`,
-    `SUMMARY:${homeName} vs ${awayName}`,
-    `LOCATION:${fixture.stadium}, ${fixture.city}`,
-    `DESCRIPTION:${description}`,
-    'END:VEVENT',
-    'END:VCALENDAR'
-  ].join('\\n');
+  const dates = `${formatForICS(start)}/${formatForICS(end)}`;
+  const summary = `${homeName} vs ${awayName}`;
+  const details = `Stage: ${stageLabel}\nVenue: ${fixture.stadium}, ${fixture.city}`;
+  const location = `${fixture.stadium}, ${fixture.city}`;
 
-  return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: summary,
+    dates,
+    details,
+    location
+  });
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
 function formatForICS(date) {
