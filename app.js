@@ -156,6 +156,8 @@ async function loadData() {
           : fixture.stage
             ? capitalize(fixture.stage)
             : 'TBD';
+        const calendarLink = buildCalendarLink(fixture, home.label, away.label, stageLabel);
+        const mapsLink = buildMapsLink(fixture);
 
         return `
           <article class="fixture">
@@ -183,6 +185,23 @@ async function loadData() {
               </div>
             </div>
             <p class="fixture-venue">${fixture.city} · ${fixture.stadium}</p>
+            <div class="fixture-actions">
+              <a
+                class="fixture-action"
+                href="${calendarLink}"
+                download="fixture-${fixture.id}.ics"
+              >
+                Add to calendar
+              </a>
+              <a
+                class="fixture-action"
+                href="${mapsLink}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View on maps
+              </a>
+            </div>
           </article>
         `;
       })
@@ -279,6 +298,40 @@ function renderFlag(code) {
       aria-hidden="true"
     />
   `;
+}
+
+function buildCalendarLink(fixture, homeName, awayName, stageLabel) {
+  const start = new Date(fixture.date);
+  const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+  const dtStart = formatForICS(start);
+  const dtEnd = formatForICS(end);
+  const description = `Stage: ${stageLabel}\\nVenue: ${fixture.stadium}, ${fixture.city}`;
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//WC26 Tracker//EN',
+    'BEGIN:VEVENT',
+    `UID:fixture-${fixture.id}@wc26-tracker`,
+    `DTSTAMP:${formatForICS(new Date())}`,
+    `DTSTART:${dtStart}`,
+    `DTEND:${dtEnd}`,
+    `SUMMARY:${homeName} vs ${awayName}`,
+    `LOCATION:${fixture.stadium}, ${fixture.city}`,
+    `DESCRIPTION:${description}`,
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\\n');
+
+  return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
+}
+
+function formatForICS(date) {
+  return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+}
+
+function buildMapsLink(fixture) {
+  const query = encodeURIComponent(`${fixture.stadium} ${fixture.city}`);
+  return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
 loadData();
