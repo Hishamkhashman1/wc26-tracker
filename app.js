@@ -55,6 +55,8 @@ async function loadData() {
   const teamDetails = document.getElementById('teamDetails');
   const fixturesSection = document.getElementById('fixtures');
   const fixturesList = document.getElementById('fixturesList');
+  const mediaSection = document.getElementById('media');
+  const mediaContent = document.getElementById('mediaContent');
 
   const teamMap = new Map(teams.map(team => [team.code, team]));
   const sortedTeams = [...teams].sort((a, b) => a.name.localeCompare(b.name));
@@ -74,14 +76,17 @@ async function loadData() {
     if (!teamCode) {
       teamDetails.innerHTML = '';
       fixturesList.innerHTML = '';
+      mediaContent.innerHTML = '';
       togglePlaceholder(teamInfoSection, true);
       togglePlaceholder(fixturesSection, true);
+      togglePlaceholder(mediaSection, true);
       return;
     }
 
     const team = teamMap.get(teamCode);
     renderTeamSnapshot(team, groups);
     renderFixtures(teamCode);
+    renderMedia(team);
   });
 
   function renderTeamSnapshot(team, groupsData) {
@@ -242,6 +247,35 @@ async function loadData() {
       label: getTeamLabel(primary, playIn)
     };
   }
+
+  function renderMedia(team) {
+    if (!team) {
+      mediaContent.innerHTML = '';
+      togglePlaceholder(mediaSection, true);
+      return;
+    }
+
+    const media = buildMediaSources(team);
+    togglePlaceholder(mediaSection, false);
+
+    mediaContent.innerHTML = `
+      <article class="media-card">
+        <div class="media-frame">
+          <iframe
+            src="${media.embed}"
+            title="${team.name} qualifying highlights"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <p>Watch ${team.name}'s road to the tournament.</p>
+        <a class="media-link" href="${media.watch}" target="_blank" rel="noopener noreferrer">
+          Open on YouTube
+        </a>
+      </article>
+    `;
+  }
 }
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
@@ -327,6 +361,32 @@ function formatForICS(date) {
 function buildMapsLink(fixture) {
   const query = encodeURIComponent(`${fixture.stadium} ${fixture.city}`);
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
+}
+
+function buildMediaSources(team) {
+  const overrides = {
+    ARG: 'dWJH17GELyA',
+    BRA: '4tJS3BM4tiQ',
+    ENG: 'v9vywgq6Z9Q',
+    USA: '33jjXNMTvEw',
+    MEX: '2F3UX0PGD7A',
+    CAN: 'THaj6MqFmoM',
+    ESP: 'GqORdzdrIWw'
+  };
+
+  const id = overrides[team.code];
+  if (id) {
+    return {
+      embed: `https://www.youtube.com/embed/${id}`,
+      watch: `https://www.youtube.com/watch?v=${id}`
+    };
+  }
+
+  const query = encodeURIComponent(`${team.name} World Cup qualifying highlights`);
+  return {
+    embed: `https://www.youtube.com/embed?listType=search&list=${query}`,
+    watch: `https://www.youtube.com/results?search_query=${query}`
+  };
 }
 
 loadData();

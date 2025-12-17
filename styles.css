@@ -224,6 +224,48 @@ select:focus-visible {
   margin-top: 1rem;
 }
 
+.media-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.media-frame {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+  border: 1px solid #e2e8f0;
+}
+
+.media-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.media-link {
+  align-self: flex-start;
+  display: inline-flex;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  background: #0ea5e9;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+}
+
+.media-link:hover,
+.media-link:focus-visible {
+  background: #0284c7;
+}
+
 .fixture {
   background: white;
   border-radius: 18px;
