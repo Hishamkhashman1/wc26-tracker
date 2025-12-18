@@ -38,6 +38,19 @@
         <p class="placeholder">Pick a team to watch their qualifying story.</p>
         <div id="mediaContent" aria-live="polite"></div>
       </section>
+
+      <section id="venueSearch" class="panel panel--full">
+        <h2>Search by venue</h2>
+        <p class="placeholder">Start typing a stadium or city name to see every match hosted there.</p>
+        <label for="venueQuery" class="sr-only">Search venues</label>
+        <input
+          id="venueQuery"
+          type="search"
+          placeholder="Search stadium or city..."
+          autocomplete="off"
+        >
+        <div id="venueResults" class="venue-results" aria-live="polite"></div>
+      </section>
     </main>
 
     <footer>

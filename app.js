@@ -57,9 +57,13 @@ async function loadData() {
   const fixturesList = document.getElementById('fixturesList');
   const mediaSection = document.getElementById('media');
   const mediaContent = document.getElementById('mediaContent');
+  const venueSection = document.getElementById('venueSearch');
+  const venueResults = document.getElementById('venueResults');
+  const venueInput = document.getElementById('venueQuery');
 
   const teamMap = new Map(teams.map(team => [team.code, team]));
   const sortedTeams = [...teams].sort((a, b) => a.name.localeCompare(b.name));
+  const venueIndex = buildVenueIndex(fixtures);
 
   sortedTeams.forEach(team => {
     const opt = document.createElement('option');
@@ -88,6 +92,11 @@ async function loadData() {
     renderFixtures(teamCode);
     renderMedia(team);
   });
+
+  venueInput.addEventListener('input', () => {
+    renderVenueResults(venueInput.value);
+  });
+  renderVenueResults(venueInput.value);
 
   function renderTeamSnapshot(team, groupsData) {
     if (!team) {
@@ -156,11 +165,7 @@ async function loadData() {
         const isHome = fixture.home === teamCode;
         const home = getParticipant(fixture, 'home');
         const away = getParticipant(fixture, 'away');
-        const stageLabel = fixture.stage === 'group'
-          ? `Group ${fixture.group}`
-          : fixture.stage
-            ? capitalize(fixture.stage)
-            : 'TBD';
+        const stageLabel = getStageLabel(fixture);
         const calendarLink = buildGoogleCalendarLink(fixture, home.label, away.label, stageLabel);
         const mapsLink = buildMapsLink(fixture);
 
@@ -276,6 +281,53 @@ async function loadData() {
       </article>
     `;
   }
+
+  function renderVenueResults(query = '') {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized) {
+      venueResults.innerHTML = '';
+      togglePlaceholder(venueSection, true);
+      return;
+    }
+
+    const matches = venueIndex.filter(entry => entry.search.includes(normalized));
+    togglePlaceholder(venueSection, false);
+
+    if (!matches.length) {
+      venueResults.innerHTML = '<p class="empty-state">No fixtures found for that venue yet.</p>';
+      return;
+    }
+
+    venueResults.innerHTML = matches
+      .map(entry => {
+        const fixturesMarkup = entry.fixtures
+          .map(fixture => {
+            const home = getParticipant(fixture, 'home');
+            const away = getParticipant(fixture, 'away');
+            const stageLabel = getStageLabel(fixture);
+            return `
+              <li>
+                <span class="venue-matchup">${home.label} vs ${away.label}</span>
+                <span class="venue-meta">${stageLabel} · ${formatDate(fixture.date)} · ${formatTime(fixture.date)}</span>
+              </li>
+            `;
+          })
+          .join('');
+
+        return `
+          <article class="venue-card">
+            <header>
+              <strong>${entry.stadium}</strong>
+              <span>${entry.city}</span>
+            </header>
+            <ul class="venue-fixtures">
+              ${fixturesMarkup}
+            </ul>
+          </article>
+        `;
+      })
+      .join('');
+  }
 }
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
@@ -313,6 +365,14 @@ function prettifyPlaceholder(code) {
 
 function capitalize(str = '') {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function getStageLabel(fixture) {
+  if (fixture.stage === 'group') {
+    return `Group ${fixture.group}`;
+  }
+
+  return fixture.stage ? capitalize(fixture.stage) : 'TBD';
 }
 
 function renderFlag(code) {
@@ -387,6 +447,30 @@ function buildMediaSources(team) {
     embed: `https://www.youtube.com/embed?listType=search&list=${query}`,
     watch: `https://www.youtube.com/results?search_query=${query}`
   };
+}
+
+function buildVenueIndex(fixtures) {
+  const map = new Map();
+
+  fixtures.forEach(fixture => {
+    const key = `${fixture.stadium}|${fixture.city}`;
+    if (!map.has(key)) {
+      map.set(key, {
+        stadium: fixture.stadium,
+        city: fixture.city,
+        fixtures: []
+      });
+    }
+    map.get(key).fixtures.push(fixture);
+  });
+
+  return Array.from(map.values()).map(entry => {
+    entry.fixtures.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+    entry.search = `${entry.stadium} ${entry.city}`.toLowerCase();
+    return entry;
+  });
 }
 
 loadData();
