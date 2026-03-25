@@ -120,6 +120,11 @@ select:focus-visible {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
 }
 
+.panel:hover{
+background-color: #48667c;
+cursor: pointer;
+}
+
 .panel--full {
   grid-column: 1 / -1;
 }
